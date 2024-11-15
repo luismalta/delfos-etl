@@ -5,6 +5,10 @@ services:
       POSTGRES_PASSWORD: source_postgres_password
     volumes:
       - ./source_db/pgdata:/var/lib/postgresql/data
+      - ./source_db/dados_10_dias.csv:/dados_10_dias.csv
+      - ./source_db/001_init_source_db.sh:/docker-entrypoint-initdb.d/001_init_source_db.sh
+      - ./source_db/002_populate_source_db.sh:/docker-entrypoint-initdb.d/002_populate_source_db.sh
+
   target_db:
     image: postgres:13
     environment:
