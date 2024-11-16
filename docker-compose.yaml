@@ -15,7 +15,7 @@ services:
       POSTGRES_PASSWORD: target_postgres_password
     volumes:
       - ./target_db/pgdata:/var/lib/postgresql/data
-      - ./target_db/scripts/001_init_source_db.sh:/docker-entrypoint-initdb.d/001_init_source_db.sh
+      - ./target_db/scripts/001_init_target_db.sh:/docker-entrypoint-initdb.d/001_init_target_db.sh
   
   source_db_api:
     build:
