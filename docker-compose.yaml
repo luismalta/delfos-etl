@@ -5,16 +5,28 @@ services:
       POSTGRES_PASSWORD: source_postgres_password
     volumes:
       - ./source_db/pgdata:/var/lib/postgresql/data
-      - ./source_db/dados_10_dias.csv:/dados_10_dias.csv
-      - ./source_db/001_init_source_db.sh:/docker-entrypoint-initdb.d/001_init_source_db.sh
-      - ./source_db/002_populate_source_db.sh:/docker-entrypoint-initdb.d/002_populate_source_db.sh
+      - ./source_db/scripts/dados_10_dias.csv:/dados_10_dias.csv
+      - ./source_db/scripts/001_init_source_db.sh:/docker-entrypoint-initdb.d/001_init_source_db.sh
+      - ./source_db/scripts/002_populate_source_db.sh:/docker-entrypoint-initdb.d/002_populate_source_db.sh
 
   target_db:
     image: postgres:13
     environment:
       POSTGRES_PASSWORD: target_postgres_password
     volumes:
-      - ./target_db/pgdata:/var/lib/postgresql/data 
+      - ./target_db/pgdata:/var/lib/postgresql/data
+      - ./target_db/scripts/001_init_source_db.sh:/docker-entrypoint-initdb.d/001_init_source_db.sh
+  
+  source_db_api:
+    build:
+      context: source_db/
+    ports:
+      - 8000:8000
+    env_file:
+      - source_db/.env
+    volumes:
+      - ./source_db/src/:/app/src/
+
   
   pgadmin:
     image: dpage/pgadmin4

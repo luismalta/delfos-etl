@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "source-db-api"
+version = "0.1.0"
+description = ""
+authors = ["Luis Malta <luiso.malta@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+psycopg2-binary = "^2.9.10"
+fastapi = {extras = ["standard"], version = "^0.115.5"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
