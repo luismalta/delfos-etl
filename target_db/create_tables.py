@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, TIMESTAMP, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import time
@@ -37,14 +37,14 @@ class Signal(Base):
 # Define the Data model
 class Data(Base):
     __tablename__ = 'data'
-    timestamp = Column(TIMESTAMP, primary_key=True, nullable=False)
+    timestamp = Column(DateTime, primary_key=True, nullable=False)
     signal_id = Column(Integer, ForeignKey('signal.id'), primary_key=True, nullable=False)
     value = Column(Float, nullable=False)
 
 # Define the RawSourceData model
 class RawSourceData(Base):
     __tablename__ = 'raw_source_data'
-    timestamp = Column(TIMESTAMP, primary_key=True, nullable=False)
+    timestamp = Column(DateTime, primary_key=True, nullable=False)
     wind_speed = Column(Float)
     power = Column(Float)
     ambient_temperature = Column(Float)
