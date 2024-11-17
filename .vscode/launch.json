@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Dagster: Debug Dagit UI",
+        "type": "python",
+        "request": "launch",
+        "module": "dagster",
+        "justMyCode": true,
+        "args": ["dev"],
+        "envFile": "${workspaceFolder}/etl/.env",
+        "cwd": "${workspaceFolder}/etl"
+      }
+    ]
+  }
