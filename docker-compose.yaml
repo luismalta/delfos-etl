@@ -32,6 +32,45 @@ services:
       - source_db/.env
     volumes:
       - ./source_db/src/:/app/src/
+  
+  dagster:
+    build:
+      context: etl/
+    ports:
+      - 3000:3000
+    env_file:
+      - etl/.env
+    volumes:
+      - ./etl/etl/:/app/etl/
+    depends_on:
+      - source_db
+      - target_db
+      - source_db_api
+  docker_daemon:
+    build:
+      context: etl/
+    entrypoint:
+      - poetry
+      - run
+      - dagster-daemon
+      - run
+    container_name: docker_daemon
+    restart: on-failure
+    env_file:
+      - etl/.env
+    # environment:
+    #   DAGSTER_POSTGRES_USER: "dagster_user"
+    #   DAGSTER_POSTGRES_PASSWORD: "dagster_db_password"
+    #   DAGSTER_POSTGRES_DB: "dagster"
+    volumes: # Make docker client accessible so we can launch containers using host docker
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/io_manager_storage:/tmp/io_manager_storage
+    # networks:
+    #   - docker_example_network
+    depends_on:
+      - dagster
+      - target_db
+
 
   
   pgadmin:
