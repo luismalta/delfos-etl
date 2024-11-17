@@ -17,6 +17,12 @@ services:
       - ./target_db/pgdata:/var/lib/postgresql/data
       - ./target_db/scripts/001_init_target_db.sh:/docker-entrypoint-initdb.d/001_init_target_db.sh
   
+  init_target_db:
+    build:
+      context: target_db/
+    depends_on:
+      - target_db
+  
   source_db_api:
     build:
       context: source_db/
