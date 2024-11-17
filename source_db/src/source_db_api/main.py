@@ -16,7 +16,7 @@ async def get_data_interval(
 
     fields_to_retrive = fields.split(",")
     
-    if start_interval >= end_interval:
+    if start_interval > end_interval:
         return {"message": "Invalid interval"}
     
     allowed_fields = ["timestamp", "wind_speed", "power", "ambient_temperature"]

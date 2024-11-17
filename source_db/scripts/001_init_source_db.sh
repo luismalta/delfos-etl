@@ -11,7 +11,7 @@ EOSQL
 
 psql -v ON_ERROR_STOP=1 --username "source_db_user" --dbname "source_db" <<-EOSQL
     CREATE TABLE "data" (
-        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        timestamp TIMESTAMP PRIMARY KEY,
         wind_speed REAL,
         power REAL,
         ambient_temperature REAL
