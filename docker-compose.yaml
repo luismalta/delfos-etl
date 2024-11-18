@@ -16,12 +16,21 @@ services:
     volumes:
       - ./target_db/pgdata:/var/lib/postgresql/data
       - ./target_db/scripts/001_init_target_db.sh:/docker-entrypoint-initdb.d/001_init_target_db.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U target_db_user -d target_db"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
   
   init_target_db:
     build:
       context: target_db/
     depends_on:
-      - target_db
+      target_db:
+        condition: service_healthy
+        restart: true
+
   
   source_db_api:
     build:
